@@ -41,9 +41,9 @@ class ProductoController extends Controller
         $productos = $productos->orderBy('id')->paginate(10);
 
         if ($request->ajax()){
-            return response()->json(view('admin/compra/resultadobusqueda')->with('productos',$productos)->render());
+            return response()->json(view('admin.compra.resultadobusqueda')->with('productos',$productos)->render());
         }
-        return view('admin/producto/resultadobusqueda')->with('productos',$productos);
+        return view('admin.compra.resultadobusqueda')->with('productos',$productos);
     }
 
     /**

@@ -24,13 +24,13 @@
                     <br>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-4">
                     DESCRIPCION
                     <input type="text" name="detalles" id="detalles" class="form-control" required>
                 </div>
             </div>
 
-            <div class="row" id="compra-formbuscarproducto">
+            <div class="row">
                 @include('admin.compra.fragment.formbuscarproducto')
             </div>
 
@@ -44,15 +44,10 @@
 
             <div class="row" id="botones">
                 <div class="col-4">
-                    <button id="btn-prueba" class="btn btn-lg btn-info btn-block">probar</button>
-                </div>
-                <div class="col-4">
                     <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">GUARDAR</button>
                 </div>
             </div>
         </form>
-
-        {{--  fin form  --}}
     </div>
 
 </div>

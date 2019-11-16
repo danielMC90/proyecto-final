@@ -18,7 +18,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-        $compra = Compra::all();
+        $compra = Compra::orderBy('id', 'DESC')->paginate(10);
         return view('admin/compra/index')->with('compra',$compra);
     }
 
@@ -65,19 +65,18 @@ class CompraController extends Controller
 
         for($i =0 ; $i<count($request->id_producto); $i++){
             $detalleCompra = new DetalleCompra();
+            $detalleCompra->idCompra = 0;
             $detalleCompra->idProducto= $request->id_producto[$i];
             $detalleCompra->cantidad= $request->cantidad[$i];
             $detalleCompra->subtotal= $request->subtotal[$i];
+            $detalleCompra->precioUnitario= $request->subtotal[$i]/$request->cantidad[$i];
 
             $compra->total = $compra->total+$detalleCompra->subtotal;
             array_push($arregloDetalle, $detalleCompra);
             // array push es una funcion para arreglos en  php, es como irc cargando el arreglo
         }
 
-        dd($arregloDetalle);
-
-
-
+        //dd($detalleCompra->toArray());
         $compra->save();
         // se guarda la compra
 
