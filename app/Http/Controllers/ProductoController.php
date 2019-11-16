@@ -28,17 +28,21 @@ class ProductoController extends Controller
      */
     public function buscar(Request $request)
     {
-        $tipoProducto = $request->tipoProducto ? $request->tipoProducto: '';
-        $marcaProducto = $request->marcaProducto ? $request->marcaProducto: '';
-        $descripcionProducto = $request->descripcionProducto ? $request->descripcionProducto: '';
+        $tipoProducto = isset($_GET['productoSearch-tipo']) ? $_GET['productoSearch-tipo']: '';
+        $marcaProducto = isset($_GET['productoSearch-marca']) ? $_GET['productoSearch-marca']: '';
+        $descripcionProducto = isset($_GET['productoSearch-descripcion']) ? $_GET['productoSearch-descripcion']: '';
+
+        //dd('Tipo: '.$tipoProducto . ', Marca: '.$marcaProducto.', descrip: '.$descripcionProducto);
 
         $productos = Producto::nombretipoproducto($tipoProducto);
         $productos = $productos->nombremarca($marcaProducto);
         $productos = $productos->descripcion($descripcionProducto);
 
-        $productos = $productos->orderBy('id')->paginate();
-        if ($request->ajax())
-            return response()->json(view('admin/productos/resultadobusqueda')->with('productos',$productos)->render());
+        $productos = $productos->orderBy('id')->paginate(10);
+
+        if ($request->ajax()){
+            return response()->json(view('admin/compra/resultadobusqueda')->with('productos',$productos)->render());
+        }
         return view('admin/producto/resultadobusqueda')->with('productos',$productos);
     }
 

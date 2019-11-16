@@ -44,29 +44,28 @@ class CompraController extends Controller
     public function store(Request $request)
     {
         // $compra = new compra($request->all());
-        
+
         $compra = new compra();
         $compra->idProveedor=$request->idProveedor;
         $compra->detalles=$request->detalles;
         $compra->fecha=$request->fecha;
 
-        /* 
+        /*
             AQUI EMPIENZA EL DETALLE MAESTRO
             Se declara $arregloDetalle como Array
-            para que cuando se cree la Venta 
+            para que cuando se cree la Venta
             en la tabla que se van a ir agregando los productos es necesario tomarlo como un arreglo
-            los name de html como idproducto, precio, cantidad llevan [corchetes] para se pueda 
+            los name de html como idproducto, precio, cantidad llevan [corchetes] para se pueda
             recorrer el arreglo.
 
-        
+
         */
         $arregloDetalle=array();
         // return count($request->idProducto);
-        
-        for($i =0 ; $i<count($request->idProducto); $i++){
+
+        for($i =0 ; $i<count($request->id_producto); $i++){
             $detalleCompra = new DetalleCompra();
-            $detalleCompra->idProducto= $request->idProducto[$i];
-            $detalleCompra->precioUnitario= $request->precioUnitario[$i];
+            $detalleCompra->idProducto= $request->id_producto[$i];
             $detalleCompra->cantidad= $request->cantidad[$i];
             $detalleCompra->subtotal= $request->subtotal[$i];
 
@@ -75,9 +74,13 @@ class CompraController extends Controller
             // array push es una funcion para arreglos en  php, es como irc cargando el arreglo
         }
 
+        dd($arregloDetalle);
+
+
+
         $compra->save();
         // se guarda la compra
-        
+
 
 
         foreach($arregloDetalle as $arreglo){

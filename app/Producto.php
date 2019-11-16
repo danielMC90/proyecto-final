@@ -26,17 +26,27 @@ class Producto extends Model
     }
 
     public function scopeNombretipoproducto($query, $tipoProducto){
-        if (trim($tipoProducto) != "")
-            $query->whereIn('idTipoProducto', TipoProducto::where('nombre', 'like', '%' . $tipoProducto . '%'));
+        //dd(TipoProducto::where('tbl_tipo_producto.nombre', 'like', '%' . $tipoProducto . '%')->select('tbl_tipo_producto.id')->get()->toArray());
+        if (trim($tipoProducto) != ""){
+            $query->whereIn('tbl_producto.idTipoProducto',
+                TipoProducto::where('tbl_tipo_producto.nombre', 'like', '%' . $tipoProducto . '%')->select('tbl_tipo_producto.id')->get()->toArray()
+            );
+            //dd($query->get()->toArray());
+            //dd($query->toSql() . ' valor: ' . $tipoProducto);
+        }
     }
 
     public function scopeNombremarca($query, $marca){
-        if (trim($marca) != "")
-            $query->whereIn('idMarca', Marca::where('nombre', 'like', '%'. $marca . '%'));
+        if (trim($marca) != ""){
+            $query->whereIn('idMarca',
+                Marca::where('nombre', 'like', '%'. $marca . '%')->select('id')->get()->toArray()
+            );
+        }
     }
 
     public function scopeDescripcion($query, $descripcion){
-        if (trim($descripcion) != "")
+        if (trim($descripcion) != ""){
             $query->where('descripcion', 'like', '%' . $descripcion + '%');
+        }
     }
 }

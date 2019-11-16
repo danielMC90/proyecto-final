@@ -1,15 +1,42 @@
-$(document).on('click', '#agregarProducto', function(e){
+$(document).on('click', '#producto-btn-buscarproducto', function(e){
+    e.preventDefault();
+    var form = $(this).parents('form');
+    var route = form.attr('action');
+
+    console.log(route);
+    $.get(route, form.serialize(), function(result){
+        //console.log(result);
+        $('#compra-productosencontrados').html(result);
+    });
+});
+
+$(document).on('click', '#compra-seleccionarproducto', function(e){
+    e.preventDefault();
+    var id_producto = $(this).parents('tr').find('td').eq(1).text();
+    var tipo = $(this).parents('tr').find('td').eq(2).text();
+    var marca = $(this).parents('tr').find('td').eq(3).text();
+    var descripcion = $(this).parents('tr').find('td').eq(4).text();
+
+    var row =   '<tr>' +
+                '<td>1</td>' +
+                '<td>'+id_producto+'</td>' +
+                '<td>'+tipo+'</td>' +
+                '<td>'+marca+'</td>' +
+                '<td>'+descripcion+'</td>' +
+                '<td>'+
+                    '<input type="hidden" id="id_producto[]" name="id_producto[]" value="1" class="form-control">' +
+                    '<input type="text" id="cantidad[]" name="cantidad[]" value="1" class="form-control"> ' +
+                '</td>' +
+                '<td><input type="text" id="subtotal[]" name="cantidad[]" value="0" class="form-control"></td>' +
+                '<td><a id="detallecompra-quitarproducto" href="#" class="btn btn-primary">Quitar</a></td>' +
+                '<tr>';
+    console.log(row);
+    $('#compra-detalle').append(row);
+});
+
+$(document).on('click', '#btn-prueba', function(e){
     e.preventDefault();
 
-    var route = 'http://127.0.0.1:8000/producto/buscar';
-
-    var tipoProducto = $("#tipoproductoSearch-nombre").val();
-    var marcaProducto = $("#marcaSearch-nombre").val();
-    var descripcionProducto = $("#productoSearch-descripcion").val();
-    //alert(tipoProducto + ' ' + marcaProducto + ' ' + descripcionProducto);
-    $.get(route, {tipoProducto: tipoProducto, marcaProducto: marcaProducto, descripcionProducto: descripcionProducto})
-    .done(function(data) {
-        alert(data);
-    },
-    "json");
+    alert('probando');
 });
+
