@@ -5,7 +5,7 @@
             <legend>COMPRAS</legend>
             <br>
             <a href="{{route('compra.create')}}" class="btn btn-info">REGISTRAR COMPRA</a>
-        </div>        
+        </div>
         <div class="card-body">
             <table class="table table-bordered">
                 <thead>
@@ -33,7 +33,8 @@
                    @endforeach
                 </tbody>
             </table>
+            {{ $compra->links() }}
         </div>
     </div>
-    
+
 @endsection
